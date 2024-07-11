@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="col">
+            <br><br>
+            <center><h1>Product Categories</h1></center>
+            {% for category in categories %}
+            <br>
+                <center>
+                    <h5><a href="{% url 'category' category %}" class="text-decoration-none">{{ category}}</a>|<span><small><a href="{% url 'edit_category' category.id %}">Edit</a></small></span></h5> <br>
+                </center>
+            {% endfor %}
+        </div>
+    </div>
+<br><br><br><br><br><br><br><br><br><br>
+{% endblock %}

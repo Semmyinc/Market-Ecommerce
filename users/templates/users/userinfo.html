@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="col-md-6 offset-md-3">
+           <form action="" method="POST">
+                {% csrf_token %}
+                
+                    <strong>Billing Information</strong>
+                       
+                            {{ b_form.as_p }}            
+                        
+                    <strong>Shipping Information</strong>
+                       
+                            {{ s_form.as_p }}            
+                       
+
+                        <button type="submit" class="btn btn-outline-secondary" >Update Information</button>
+               
+           </form>
+            <br>
+        </div>
+    </div>
+
+   
+                                    
+{% endblock %}
+
+<div class="card">
+    <div class="card-header">Shipping Information</div>
+        <div class="card-body">
+            <form action="" method="POST">
+                {% csrf_token %}
+                    {{ s_form.as_p }}
+                    <button type="submit" class="btn btn-outline-secondary" >Update Information</button>
+            </form>
+      <!-- <h5 class="card-title">Special title treatment</h5>
+      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>  -->
+      <!-- <button type="submit" class="btn btn-outline-secondary" >Update Information</button> -->
+      <!-- <a href="{% url 'userinfo' %}" class="btn btn-outline-secondary">Update Information</a> -->
+        </div>
+</div>

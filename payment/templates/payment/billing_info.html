@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <div class="col-md-6 offset-md-3">
+            <br>
+            <div class="card">
+                    <div class="card-header">
+                    Order Summary
+                    </div>
+                    <div class="card-body">
+                        {% for product in cart_products %}
+                            {{ product.name }} --
+                        {% if product.promo %}
+                        &#8358;{{ product.promo_price }}
+                        {% else %}
+                        &#8358;{{ product.price }}
+                            
+                        {% endif %}
+                        <br>
+                        <small>
+                            Quantity:
+                            {% for key, value in quantities.items %}
+                                {% if key == product.id|slugify %}
+                                    {{ value }}
+                                {% endif %}
+                            {% endfor %}
+                            
+                        </small>
+                        {% endfor %}
+                        <br>
+                        <strong>Total: &#8358;{{ totals }}</strong>
+                        <br><br>
+                        <small><a  class="btn btn-sm btn-outline-secondary"  href="{% url 'cart_summary' %}">Back</a></small>
+                    </div>
+                    
+                    <br>
+                    
+            </div>
+               <br>
+            <div class="card">
+                <div class="card-header">
+                Shipping Information
+                </div>
+                <div class="card-body">
+                   Fullname: {{ shipping_details.shipping_fullname }} <br>
+                    Email: {{ shipping_details.shipping_email }} <br>
+                    Address 1 {{ shipping_details.shipping_address1 }} <br>
+                    Address 2 {{ shipping_details.shipping_address2 }} <br>
+                    City: {{ shipping_details.shipping_city }} <br>
+                    State: {{ shipping_details.shipping_state }} <br>
+                    zipcode: {{ shipping_details.shipping_zipcode }} <br>
+                    Country: {{ shipping_details.shipping_country }} <br> <br>
+                    <a class="btn btn-sm btn-outline-secondary"  href="{% url 'checkout' %}">Update Shipping</a> 
+                </div>
+                    
+                    
+                    
+                
+                <br>
+            </div>
+            <br>
+            <div class="card">
+                <div class="card-header">
+                Billing Information
+                </div>
+                <div class="card-body">
+                   <form action="{% url 'process_order' %}" method="POST">
+                    {% csrf_token %}
+                    {{ billing_form.as_p }}
+                    <button type="submit"  class="btn btn-outline-secondary">Pay Now</button>
+                   </form>
+                    
+                </div>
+                    
+                    
+                    
+                
+                <br>
+            </div>
+            <br>
+            
+            
+        </div>
+        <br>
+    </div>
+        
+       
+{% endblock %}

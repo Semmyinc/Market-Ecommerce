@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <div class="col-md-6 offset-md-3">
+            <br>
+            <div class="card">
+                    <div class="card-header">
+                    Order Summary
+                    </div>
+                    <div class="card-body">
+                        {% for product in cart_products %}
+                            {{ product.name }} --
+                        {% if product.promo %}
+                        &#8358;{{ product.promo_price }}
+                        {% else %}
+                        &#8358;{{ product.price }}
+                            
+                        {% endif %}
+                        <br>
+                        <small>
+                            Quantity:
+                            {% for key, value in quantities.items %}
+                                {% if key == product.id|slugify %}
+                                    {{ value }}
+                                {% endif %}
+                            {% endfor %}
+                            
+                        </small>
+                        {% endfor %}
+                        <br>
+                        <strong>Total: &#8358;{{ totals }}</strong>
+                        <br><br>
+                        <small><a  class="btn btn-sm btn-outline-secondary"  href="{% url 'cart_summary' %}">Back</a></small>
+                    </div>
+                    
+                    <br>
+                    
+            </div>
+               <br>
+            <div class="card">
+                <div class="card-header">
+                Shipping Information
+                </div>
+                <form action="{% url 'billing_info' %}" method="POST">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button  type='submit' class="btn btn-outline-secondary">Continue to Billing</button>
+                </form>
+                <br>
+            </div>
+        </div>
+    </div>
+        
+       
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container">
+    <div class="col-md-6 offset-md-3">
+        
+        <center>
+            <div class="card">
+                <div class="card-header">
+                    {{ specific_order }} ---> &#8358;{{ specific_order.amount_paid }}
+                </div>
+                <div class="card-body">
+                    Fullname: {{ specific_order.fullname }} <br>
+    
+                    {% if specific_order.date_ordered %}
+                        Date Ordered: {{ specific_order.date_ordered }}
+                    {% else %}
+                        Date Shipped: {{ specific_order.date_shipped }}
+                    {% endif %} <br>
+                    Shipping Address: 
+                    <pre>
+                        {{ specific_order.shipping_address}}
+                    </pre>
+                    <strong>Order items</strong> <br>
+                    {% for item in specific_order_items %}
+                        {{ item.product }} - {{ item.quantity }} - {{ item.price}}
+                    {% endfor %}
+                    <br><br>
+                    {% if not specific_order.shipped %}
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="shipping_status" value="true">
+                        <button type="submit" class="btn btn-success">Mark as Shipped</button>
+                        
+                    </form>
+
+                    {% else %}
+                        <!-- not shipped  -->
+                        <form action="" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="shipping_status" value="false">
+                            <button type="submit" class="btn btn-danger">Mark as not Shipped</button>
+                            
+                        </form>
+                    {% endif %}
+                    <!-- <table class="table table-striped table-hover table bordered">
+                        <thead class="table-dark">
+                          <tr>
+                            <th scope="col">Order</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Customer Email</th>
+                            <th scope="col">Date Ordered</th>
+                            <th scope="col">Ship Status</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            
+                          <tr>
+                            
+                            <td>{{ specific_order.id }}</td>
+                            <td>&#8358;{{ specific_order.amount_paid }}</td>
+                            <td>{{ specific_order.email }}</td>
+                            <td>{{ specific_order.date_ordered }}</td>                   
+                            <td>{{ specific_order.shipped }}</td>
+                     
+                          </tr>
+                          
+                        </tbody>
+                    </table> -->
+                </div>
+                <br>
+                
+            </div>
+        </center>
+        
+    </div>
+  </div>
+<br>
+{% endblock %}

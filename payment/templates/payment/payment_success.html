@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container">
+    <div class="col-md-6 offset-md-3">
+        Payment Success
+        <div class="card">
+            <div class="card-header">
+              Featured
+            </div>
+            <div class="card-body">
+                {% for product in cart_products %}
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    {% if product.promo %}
+                    <p class="card-text">{{ product.promo_price }}</p>
+                    {% else %}
+                    <p class="card-text">{{ product.price }}</p>
+                    
+                    {% endif %}
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                {% endfor %}
+            </div>
+            <br>
+            
+        </div>
+        <p>Shipping Information</p>
+            <form action="{% url 'payment_success' %}" method="POST">
+                {% csrf_token %}
+                {{form.as_p}}
+                <button type="submit" class="btn btn-secondary">Submit</button>
+            </form>
+            <br>
+    </div>
+  </div>
+
+{% endblock %}

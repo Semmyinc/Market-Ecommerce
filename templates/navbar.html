@@ -1,0 +1,94 @@
+{% load static %}
+
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+    <div class="container px-4 px-lg-5">
+        <!-- <a class=href="{% url 'home' %}"><img src="{% static 'images/logoo.png' %}" class="img-fluid rounded-float-start" style="max-width: 10%; height: auto" alt="logo"></a> -->
+        <img src="{% static 'images/logoo.png' %}" class="img-fluid rounded-float-start" style="max-width: 8%; height: auto;"  alt="logo">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                <li class="nav-item"><a class="nav-link active text-secondary" aria-current="page" href="{% url 'home' %}">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Contact Us</a></li>
+
+                {% if request.user.is_authenticated %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+                <!-- <li class="nav-item"><a class="nav-link" href="{% url 'profile' %}">Profile</a></li> -->                                  
+                {% else %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Register</a></li>
+                {% endif %}
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="{% url 'category_summary' %}" role="button" data-bs-toggle="dropdown" aria-expanded="false">Category</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{% url 'category_summary'  %}">All Categories</a></li>
+                        <li><a class="dropdown-item" href="{% url 'add_category'  %}">Add Category</a></li>
+                        
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="{% url 'category' 'Corn_Puffed_Snacks' %}">Corn Puffed Snacks</a></li>
+                        <li><a class="dropdown-item" href="{% url 'category' 'Peanut_Burger' %}">Peanut Burger</a></li>
+                        <li><a class="dropdown-item" href="{% url 'category' 'Chinchin' %}">Chinchin</a></li>
+                        <li><a class="dropdown-item" href="{% url 'category' 'Popcorn' %}">Popcorn</a></li>
+                        <li><a class="dropdown-item" href="{% url 'category' 'Groundnut_Cake_Products' %}">Groundnut Cake Products</a></li>
+                        <li><a class="dropdown-item" href="{% url 'category' 'Raw_Food_Items' %}">Raw Food Items</a></li>
+                    </ul>
+                </li>
+
+                
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="{% url 'profile' %}" role="button" data-bs-toggle="dropdown" aria-expanded="false">Profile</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        
+                        <li><a class="dropdown-item" href="{% url 'profile' %}">My Profile</a></li>
+                        <li><a class="dropdown-item" href="{% url 'userinfo' %}">Update Information</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="#">Staff</a></li>
+                        <li><a class="dropdown-item" href="#">Customers</a></li>
+                        <li><a class="dropdown-item" href="{% url 'upload_product' %}">Upload Product</a></li>
+                        
+                       
+                    </ul>         
+                </li>           
+                {% if request.user.is_superuser %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Orders</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        
+                        <li><a class="dropdown-item" href="{% url 'all_order' %}">All Orders</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="{% url 'shipped_order' %}">Shipped Orders</a></li>
+                        <li><a class="dropdown-item" href="{% url 'unshipped_order' %}">Unshipped Orders</a></li>
+                        
+                        
+                        
+                    </ul> 
+                {% endif %}        
+                </li>           
+                        
+               
+
+                        
+                    
+
+
+                <!-- {% block content %} -->
+                <form class="d-flex" role="search" method="POST" action="{% url 'search' %}">
+                    {% csrf_token %}
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+                    <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->
+                </form>
+            <!-- {% endblock %} -->
+                <form class="d-flex">
+                    <a href="{% url 'cart_summary' %}" class="btn btn-outline-dark" type="submit">
+                        <i class="bi-cart-fill me-1"></i>
+                        Cart
+                        <span class="badge bg-dark text-white ms-1 rounded-pill" id="cart_quantity">{{ cart|length }}</span>
+                    </a>
+                </form>
+            </ul>
+            
+        </div>
+    </div>
+</nav>

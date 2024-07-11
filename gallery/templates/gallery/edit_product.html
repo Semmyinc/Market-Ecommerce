@@ -1,0 +1,17 @@
+{% extends 'base.html'%}
+
+{% load crispy_forms_tags %}
+    
+{% block content %}
+
+    <div class="container">
+        <div class="col-md-6 offset-md-3">
+            <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                    {{ form.as_p}}
+                <button class="btn btn-secondary">Edit Product</button>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
